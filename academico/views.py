@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from academico.forms import ProfessorForm
 from academico.models import Curso, Disciplina, Professor, Turma
 
 # Create your views here.
@@ -13,13 +14,25 @@ def listarProfessores(request):
     #-- dos professores
     professores = Professor.objects.all()
 
-    return render(request, 'professores/listagem.html', {'profs':professores})
+    return render(request, 'academico/professores/listagem.html', {'profs':professores},)
 
 def criarProfessor(request):
-    return render()
+    form = ProfessorForm(request.POST or None)
 
-def atualizarProfessor(request):
-    return render()
+    if form.is_valid():
+        form.save()
+        return redirect('professor_listar')
+
+    return render(request, 'academico/professores/adicionar.html', {'form':form},)
+
+def atualizarProfessor(request, pk):
+    professor = get_object_or_404(Professor, pk=pk)
+    form = ProfessorForm(request.POST or None, instance=professor)
+
+    if form.is_valid():
+        form.save()
+        return redirect('professor_listar')
+    return render(request, 'academico/professores/adicionar.html', {'form':form})
 
 def deletarProfessor(request):
     return render()

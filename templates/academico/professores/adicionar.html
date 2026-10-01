@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Professor - Gestão Acadêmica{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-while">
+                <h4 class="mb-0">
+                    {% if form.instance.pk %}Editar{% else %}Cadastrar{% endif %} Professor
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_erros }}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}"
+                        class="form-label">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    <div class="text-danger small">
+                        {{ field.errors }}
+                    </div>
+                    </div>
+                    {% endfor %}
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'professor_listar' %}"
+                        class="btn btn-outline-secondary">
+                        Voltar
+                        </a>
+                        <button type="submit" class="btn btn-sucess">
+                            Salvar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
