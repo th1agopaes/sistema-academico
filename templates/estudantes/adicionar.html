@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Novo Estudante - Gestão Acadêmica{% endblock %}
+{% block title %}{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Estudante - Gestão Acadêmica{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">

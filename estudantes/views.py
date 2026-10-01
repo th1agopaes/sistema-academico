@@ -30,13 +30,13 @@ def listarEstudantes(request):
 
     return render(request, 'estudantes/listagem.html', contexto)
 
-def deletarEstudante(request, id=None):
-    estudante = Estudante.objects.get(pk=id)
+def deletarEstudante(request, pk):
+    estudante = Estudante.objects.get(pk=pk)
     estudante.delete()
     return redirect('/')
 
-def atualizarEstudante(request, id=None):
-    editar = Estudante.objects.get(pk=id)
+def atualizarEstudante(request, pk):
+    editar = Estudante.objects.get(pk=pk)
 
     edicao = EstudanteForm(request.POST or None, request.FILES or None, instance=editar)
     if edicao.is_valid():
@@ -47,4 +47,4 @@ def atualizarEstudante(request, id=None):
         'form' : edicao
     }
 
-    return render(request, 'editar.html', context=dicionario)
+    return render(request, 'estudantes/adicionar.html', context=dicionario)
